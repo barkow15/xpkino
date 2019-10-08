@@ -2,15 +2,105 @@
 <html lang="en">
 <head>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+    <link href="../static/css/index.css" th:href="@{/css/index.css}" rel="stylesheet" />
+
 
     <meta charset="UTF-8">
     <title>Movies</title>
 </head>
 <body>
+
+
+<!-- START MOVIE CARDS -->
+
+<div class="container mt-3">
+
+    <div class="d-flex justify-content-around bg-secondary mb-3" style="background-color: white !important;">
+
+        <!-- START MOVIE CARD #1 -->
+
+
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top card-poster"
+                 src="https://www.schnittberichte.com/pics/SBs/100/624222/e_cover.jpg"
+                 alt="Rambo Image">
+            <div class="card-body">
+                <h5 class="card-title">Rambo</h5>
+                <p class="card-text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et
+                    dolore magna aliqua. Quam nulla porttitor massa id neque aliquam. Egestas quis ipsum suspendisse
+                    ultrices gravida dictum fusce ut. Tincidunt nunc pulvinar sapien et ligula. Sit amet justo donec
+                    enim
+                    diam. </p>
+                <a href="#" class="btn btn-primary">Køb billet</a>
+                <a href="#" class="btn btn-primary">Mere info</a>
+
+            </div>
+        </div>
+
+        <!-- START MOVIE CARD #2 -->
+
+
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top card-poster"
+                 src="https://www.kino.dk/sites/default/files/styles/k_poster_big/public/movie-posters/xy_plakat_0.jpg?itok=fd9nElpr"
+                 alt="Rambo Image">
+            <div class="card-body">
+                <h5 class="card-title">XY Chealsea</h5>
+                <p class="card-text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et
+                    dolore magna aliqua. Quam nulla porttitor massa id neque aliquam. Egestas quis ipsum suspendisse
+                    ultrices gravida dictum fusce ut. Tincidunt nunc pulvinar sapien et ligula. Sit amet justo donec
+                    enim
+                    diam. </p>
+                <a href="#" class="btn btn-primary">Køb billet</a>
+                <a href="#" class="btn btn-primary">Mere info</a>
+
+            </div>
+        </div>
+
+
+        <!-- START MOVIE CARD #3 -->
+
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top card-poster"
+                 src="https://www.kino.dk/sites/default/files/styles/k_poster_big/public/movie-posters/ad_astra_plakat.jpg?itok=bE_O6JRW"
+                 alt="Rambo Image">
+            <div class="card-body">
+                <h5 class="card-title">Ad Astra</h5>
+                <p class="card-text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et
+                    dolore magna aliqua. Quam nulla porttitor massa id neque aliquam. Egestas quis ipsum suspendisse
+                    ultrices gravida dictum fusce ut. Tincidunt nunc pulvinar sapien et ligula. Sit amet justo donec
+                    enim
+                    diam. </p>
+                <a href="#" class="btn btn-primary">Køb billet</a>
+                <a href="#" class="btn btn-primary">Mere info</a>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- END MOVIE CARDS -->
 
 </body>
 </html>

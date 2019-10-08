@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class FrontPageController {
     @GetMapping("/")
     public String index(){
-        return "movies";
+        return "filmoversigt";
     }
 }

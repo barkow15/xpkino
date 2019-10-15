@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" th:href="@{/calendar.css}"/>
+    <script th:src="@{/calendar.js}"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+
+    <script>
+
+        $(document).ready(function() {
+            var date = new Date();
+            var d = date.getDate();
+            var m = date.getMonth();
+            var y = date.getFullYear();
+
+            /*  className colors
+
+            className: default(transparent), important(red), chill(pink), success(green), info(blue)
+
+            */
+
+
+            /* initialize the external events
+            -----------------------------------------------------------------*/
+
+            $('#external-events div.external-event').each(function() {
+
+                // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+                // it doesn't need to have a start or end
+                var eventObject = {
+                    title: $.trim($(this).text()) // use the element's text as the event title
+                };
+
+                // store the Event Object in the DOM element so we can get to it later
+                $(this).data('eventObject', eventObject);
+
+                // make the event draggable using jQuery UI
+                $(this).draggable({
+                    zIndex: 999,
+                    revert: true,      // will cause the event to go back to its
+                    revertDuration: 0  //  original position after the drag
+                });
+
+            });
+
+
+            /* initialize the calendar
+            -----------------------------------------------------------------*/
+
+            var calendar =  $('#calendar').fullCalendar({
+                header: {
+                    left: 'title',
+                    center: 'agendaWeek',
+                    right: 'prev,next'
+                },
+                editable: true,
+                firstDay: 1, //  1(Monday) this can be changed to 0(Sunday) for the USA system
+                selectable: true,
+                defaultView: 'agendaWeek',
+                minTime: 10,
+                axisFormat: 'H:mm',
+                columnFormat: {
+                    month: 'ddd',    // Mon
+                    week: 'ddd d', // Mon 7
+                    day: 'dddd M/d',  // Monday 9/7
+                    agendaDay: 'dddd d'
+                },
+                titleFormat: {
+                    month: 'MMMM yyyy', // September 2009
+                    week: "MMMM yyyy", // September 2009
+                    day: 'MMMM yyyy'                  // Tuesday, Sep 8, 2009
+                },
+                allDaySlot: false,
+                selectHelper: true,
+                buttonText: {
+                prev: "<span class='fc-text-arrow'>< forrige uge</span>",
+                    next: "<span class='fc-text-arrow'>næste uge ></span>",
+                    prevYear: "<span class='fc-text-arrow'>«</span>",
+                    nextYear: "<span class='fc-text-arrow'>»</span>",
+                    today: 'I dag',
+                    month: 'måned',
+                    week: 'Uge',
+                    day: 'dag'
+                },
+                monthNames: ['Januar','Februar','Marts','April','Maj','Juni','Juli','August','September','Oktober','November','December'],
+                dayNamesShort: ['Søn','Man','Tir','Ons','Tors','Fre','Lør'],
+                select: function(start, end, allDay) {
+                    var title = prompt('Event Title:');
+                    if (title) {
+                        calendar.fullCalendar('renderEvent',
+                            {
+                                title: title,
+                                start: start,
+                                end: end,
+                                allDay: allDay
+                            },
+                            true // make the event "stick"
+                        );
+                    }
+                    calendar.fullCalendar('unselect');
+                },
+                droppable: true, // this allows things to be dropped onto the calendar !!!
+                drop: function(date, allDay) { // this function is called when something is dropped
+
+                    // retrieve the dropped element's stored Event Object
+                    var originalEventObject = $(this).data('eventObject');
+
+                    // we need to copy it, so that multiple events don't have a reference to the same object
+                    var copiedEventObject = $.extend({}, originalEventObject);
+
+                    // assign it the date that was reported
+                    copiedEventObject.start = date;
+                    copiedEventObject.allDay = allDay;
+
+                    // render the event on the calendar
+                    // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                    $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+                    // is the "remove after drop" checkbox checked?
+                    if ($('#drop-remove').is(':checked')) {
+                        // if so, remove the element from the "Draggable Events" list
+                        $(this).remove();
+                    }
+
+                },
+
+                events: [
+                    {
+                        id: 2,
+                        title: 'Sal 2',
+                        start: new Date(y, m, 19, 16, 30),
+                        allDay: false,
+                        className: 'info'
+                    },
+                    {
+                        id: 3,
+                        title: 'Sal 2',
+                        start: new Date(y, m, 19, 19, 30),
+                        allDay: false,
+                        className: 'info'
+                    },
+                    {
+                        id: 4,
+                        title: 'Sal 1',
+                        start: new Date(y, m, 17, 21, 30),
+                        allDay: false,
+                        className: 'info'
+                    },
+                    {
+                        id: 5,
+                        title: 'Sal 1',
+                        start: new Date(y, m, 17, 14, 00),
+                        allDay: false,
+                        className: 'info'
+                    },
+                    {
+                        id: 6,
+                        title: 'Sal 2',
+                        start: new Date(y, m, 16, 16, 30),
+                        allDay: false,
+                        className: 'info'
+                    },
+                    {
+                        id: 7,
+                        title: 'Sal 2',
+                        start: new Date(y, m, 16, 18, 30),
+                        allDay: false,
+                        className: 'info'
+                    }
+                ],
+            });
+
+
+        });
+
+    </script>
+    <style>
+
+        body {
+            margin-bottom: 40px;
+            text-align: center;
+            font-size: 14px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #wrap {
+            width: 1100px;
+            margin: 0 auto;
+        }
+
+        #external-events {
+            float: left;
+            width: 150px;
+            padding: 0 10px;
+            text-align: left;
+        }
+
+        #external-events h4 {
+            font-size: 16px;
+            margin-top: 0;
+            padding-top: 1em;
+        }
+
+        .external-event { /* try to mimick the look of a real event */
+            margin: 10px 0;
+            padding: 2px 4px;
+            background: #3366CC;
+            color: #fff;
+            font-size: .85em;
+            cursor: pointer;
+        }
+
+        #external-events p {
+            margin: 1.5em 0;
+            font-size: 11px;
+            color: #666;
+        }
+
+        #external-events p input {
+            margin: 0;
+            vertical-align: middle;
+        }
+
+        #calendar {
+            /* 		float: right; */
+            margin: 0 auto;
+            width: 900px;
+            background-color: #FFFFFF;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- START NAVBAR -->
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">KINODINO</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="/">Hjem <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="/filmskema">Kommende film<span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="#">Nye film</a>
+                <a class="nav-item nav-link" href="#">Priser</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+
+            <div class="container mt-3">
+
+                <div class="d-flex justify-content-around bg-secondary mb-3" style="background-color: white !important;">
+                    <!-- START MOVIE CARD #1 -->
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top card-poster"
+                             src="https://m.media-amazon.com/images/M/MV5BZWFkY2I1ZDAtNmZhNS00NjVlLWJiMGQtMGQ1ZmM0ZDA5ODg5XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SY1000_CR0,0,640,1000_AL_.jpg"
+                             alt="Rambo Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Rambo 2</h5>
+                            <p class="card-text">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                                et
+                                dolore magna aliqua. Quam nulla porttitor massa id neque aliquam. Egestas quis ipsum suspendisse
+                                ultrices gravida dictum fusce ut. Tincidunt nunc pulvinar sapien et ligula. Sit amet justo donec
+                                enim
+                                diam. </p>
+                            <a target="top" href="https://www.youtube.com/watch?v=bVUCdy36TKE" class="btn btn-primary">Se trailer</a>
+                        </div>
+                    </div>
+
+                    <div id='calendar'></div>
+
+                    <div style='clear:both'></div>
+
+                </div>
+            </div>
+
+            <!-- END MOVIE CARDS -->
+        </div>
+    </div>
+</body>
+</html>

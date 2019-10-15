@@ -1,0 +1,11 @@
+.kvittering {
+    border: 5px solid black;
+
+    border-radius: 25px;
+
+    margin: 25px;
+}
+
+p {
+    margin-left: 10px;
+}

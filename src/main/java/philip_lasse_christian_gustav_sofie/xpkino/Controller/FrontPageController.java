@@ -6,6 +6,6 @@ package philip_lasse_christian_gustav_sofie.xpkino.Controller;
 public class FrontPageController {
     @GetMapping("/")
     public String index(){
-        return "filmoversigt";
+        return "kvittering";
     }
 }
